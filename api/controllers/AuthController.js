@@ -1,0 +1,116 @@
+var passport = require('passport');
+ 
+var AuthController = {
+ 
+  index: function (req,res){
+                res.view();
+  },
+  logout: function (req,res){
+                req.logout();
+                res.redirect('/');
+  },
+  'google':function(req,res){
+  		passport.authenticate('google',{failureRedirect:'/login',scope:['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.profile']},
+  			function(err,user){
+  				req.logIn(user,function(err){
+  					if(err){
+  						console.log(err);
+  						res.view('500');
+  						return;
+  					}
+  					res.redirect('/');
+  					return;
+  				});
+  			}
+  		)(req,res);
+  },
+  'google/callback':function(req,res){
+  		passport.authenticate('google',function(req,res){
+  			res.redirect('/');
+  		})(req,res);
+  },
+  'linkedin':function(req,res){
+  		passport.authenticate('linkedin',{failureRedirect:'/login'},
+  			function(err,user){
+  				res.logIn(user,function(err){
+  					if(err){
+  						console.log(err);
+  						res.view('500');
+  						return;
+  					}
+  					res.redirect('/');
+  					return;
+  				})
+  			}
+  		)(req,res);
+  },
+  'linkedin/callback':function(req,res){
+		passport.authenticate('linkedin',function(req,res){
+  			res.redirect('/');
+  		})(req,res);
+  },
+  'yahoo':function(req,res){
+		passport.authenticate('yahoo',{failureRedirect:'/login'},
+  			function(err,user){
+  				res.logIn(user,function(err){
+  					if(err){
+  						console.log(err);
+  						res.view('500');
+  						return;
+  					}
+  					res.redirect('/');
+  					return;
+  				})
+  			}
+  		)(req,res);
+  },
+  'yahoo/callback':function(req,res){
+		passport.authenticate('yahoo',function(req,res){
+  			res.redirect('/');
+  		})(req,res);
+  },
+  'weibo':function(req,res){
+		passport.authenticate('weibo',{failureRedirect:'/login'},
+  			function(err,user){
+  				res.logIn(user,function(err){
+  					if(err){
+  						console.log(err);
+  						res.view('500');
+  						return;
+  					}
+  					res.redirect('/');
+  					return;
+  				})
+  			}
+  		)(req,res);
+  },
+  'weibo/callback':function(req,res){
+  		passport.authenticate('weibo',function(req,res){
+  			res.redirect('/');
+  		})(req,res)
+  },
+  'qq':function(req,res){
+	passport.authenticate('weibo',{failureRedirect:'/login'},
+  			function(err,user){
+  				res.logIn(user,function(err){
+  					if(err){
+  						console.log(err);
+  						res.view('500');
+  						return;
+  					}
+  					res.redirect('/');
+  					return;
+  				})
+  			}
+  		)(req,res);
+  },
+  'qq/callback':function(req,res){
+  		passport.authenticate('qq',function(req,res){
+  			res.redirect('/');
+  		})(req,res)
+  }
+        
+ 
+};
+ 
+module.exports = AuthController;

@@ -1,0 +1,2 @@
+# foundegg
+### a Sails application
